@@ -16,10 +16,17 @@ class TextFieldConfiguration: UITextField {
     }
     
     func configurations() {
-        placeholder = "e.g. 123.56"
-        font = UIFont.systemFont(ofSize: 25)
+        placeholder = "e.g. 123,56"
+        font = UIFont.systemFont(ofSize: 40)
         backgroundColor = .white
         textAlignment = .center
+        keyboardType = .decimalPad
+       
+        
     }
+    
+    
+    
+    
     
 }

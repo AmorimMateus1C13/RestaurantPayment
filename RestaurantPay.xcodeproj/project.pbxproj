@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D1ACE0E28AE7F5800308310 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1ACE0D28AE7F5800308310 /* ResultViewController.swift */; };
+		4DC9B87B28B3F92E0085ED63 /* CalculateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC9B87A28B3F92E0085ED63 /* CalculateModel.swift */; };
 		4DF5A11828AD288300A2FDF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF5A11728AD288300A2FDF7 /* AppDelegate.swift */; };
 		4DF5A11A28AD288300A2FDF7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF5A11928AD288300A2FDF7 /* SceneDelegate.swift */; };
 		4DF5A11C28AD288300A2FDF7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF5A11B28AD288300A2FDF7 /* ViewController.swift */; };
@@ -28,6 +30,8 @@
 
 /* Begin PBXFileReference section */
 		1F4EA9E412BFC06E2C9293E4 /* Pods_RestaurantPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RestaurantPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D1ACE0D28AE7F5800308310 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		4DC9B87A28B3F92E0085ED63 /* CalculateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateModel.swift; sourceTree = "<group>"; };
 		4DF5A11428AD288200A2FDF7 /* RestaurantPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RestaurantPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DF5A11728AD288300A2FDF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4DF5A11928AD288300A2FDF7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 			isa = PBXGroup;
 			children = (
 				4DF5A11628AD288200A2FDF7 /* RestaurantPay */,
+				4DF5A12228AD288400A2FDF7 /* LaunchScreen.storyboard */,
+				4DF5A12028AD288400A2FDF7 /* Assets.xcassets */,
 				4DF5A11528AD288200A2FDF7 /* Products */,
 				6D7DB96073CF7C2388908451 /* Pods */,
 				8738BF4584A28B9DECA1B915 /* Frameworks */,
@@ -86,10 +92,9 @@
 				4DF5A11728AD288300A2FDF7 /* AppDelegate.swift */,
 				4DF5A11928AD288300A2FDF7 /* SceneDelegate.swift */,
 				4DF5A12E28AD28B800A2FDF7 /* Protocols */,
-				4DF5A12D28AD28B200A2FDF7 /* Model */,
+				4DF5A12D28AD28B200A2FDF7 /* ViewModel */,
 				4DF5A12C28AD28AC00A2FDF7 /* View */,
 				4DF5A12B28AD28A200A2FDF7 /* Controller */,
-				4DF5A11B28AD288300A2FDF7 /* ViewController.swift */,
 				4DF5A12F28AD28C900A2FDF7 /* Helper Files */,
 				4DF5A12528AD288400A2FDF7 /* Info.plist */,
 			);
@@ -99,6 +104,8 @@
 		4DF5A12B28AD28A200A2FDF7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4DF5A11B28AD288300A2FDF7 /* ViewController.swift */,
+				4D1ACE0D28AE7F5800308310 /* ResultViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -113,13 +120,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		4DF5A12D28AD28B200A2FDF7 /* Model */ = {
+		4DF5A12D28AD28B200A2FDF7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				4DF5A13F28AD2D4D00A2FDF7 /* Constants.swift */,
-				4DF5A14928AD48C900A2FDF7 /* ColorsDesign.swift */,
+				4DC9B87A28B3F92E0085ED63 /* CalculateModel.swift */,
 			);
-			path = Model;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		4DF5A12E28AD28B800A2FDF7 /* Protocols */ = {
@@ -133,8 +139,8 @@
 		4DF5A12F28AD28C900A2FDF7 /* Helper Files */ = {
 			isa = PBXGroup;
 			children = (
-				4DF5A12028AD288400A2FDF7 /* Assets.xcassets */,
-				4DF5A12228AD288400A2FDF7 /* LaunchScreen.storyboard */,
+				4DF5A13F28AD2D4D00A2FDF7 /* Constants.swift */,
+				4DF5A14928AD48C900A2FDF7 /* ColorsDesign.swift */,
 			);
 			path = "Helper Files";
 			sourceTree = "<group>";
@@ -288,6 +294,7 @@
 				4DF5A13928AD2C0200A2FDF7 /* LabelConfiguration.swift in Sources */,
 				4DF5A13128AD291F00A2FDF7 /* ViewConfiguration.swift in Sources */,
 				4DF5A11828AD288300A2FDF7 /* AppDelegate.swift in Sources */,
+				4D1ACE0E28AE7F5800308310 /* ResultViewController.swift in Sources */,
 				4DF5A14028AD2D4D00A2FDF7 /* Constants.swift in Sources */,
 				4DF5A11A28AD288300A2FDF7 /* SceneDelegate.swift in Sources */,
 				4DF5A13728AD2BCF00A2FDF7 /* ButtonConfiguration.swift in Sources */,
@@ -296,6 +303,7 @@
 				4DF5A13528AD2AEA00A2FDF7 /* PaymentsView.swift in Sources */,
 				4DF5A14428AD31D500A2FDF7 /* ViewProtocol.swift in Sources */,
 				4DF5A13D28AD2C6000A2FDF7 /* ResultsPaymentsView.swift in Sources */,
+				4DC9B87B28B3F92E0085ED63 /* CalculateModel.swift in Sources */,
 				4DF5A14A28AD48C900A2FDF7 /* ColorsDesign.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,6 +449,7 @@
 				INFOPLIST_FILE = RestaurantPay/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -469,6 +478,7 @@
 				INFOPLIST_FILE = RestaurantPay/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

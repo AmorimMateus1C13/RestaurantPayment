@@ -7,49 +7,119 @@
 import UIKit
 import SnapKit
 
+protocol Button {
+    func buttonPressed(people: String?, tip: String?)
+    
+}
+
+
 class PaymentsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
+        userNumberText.delegate = self
         setupViewConfiguration()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var delegate: Button?
+    
     // MARK: - Background
-    var backgrounView: UIView = {
+    var view: UIView = {
+        let view =  ViewConfiguration()
+        view.backgroundWhite()
+        return view
+    }()
+    
+    var backgroundView: UIView = {
         let view = ViewConfiguration()
         view.backgrounGreen()
         return view
     }()
     
     // MARK: - Butttons
+    var tip = 1.1
+    var serviceCharge = ""
+    var serviceWithoutPer = 10
+    
     var zeroButton: UIButton = {
         let zero = ButtonConfiguration()
         zero.zeroPer()
-//        let zero = UIButton()
-        
+        zero.addTarget(self, action: #selector(selectButton(_:)), for: .touchUpInside)
         return zero
     }()
     
     var tenButton: UIButton = {
        let ten = ButtonConfiguration()
         ten.tenPer()
+        ten.addTarget(self, action: #selector(selectButton(_:)), for: .touchUpInside)
         return ten
     }()
     
     var thirteenButton: UIButton = {
         let thirteen = ButtonConfiguration()
         thirteen.thirteenPer()
+        thirteen.addTarget(self, action: #selector(selectButton(_:)), for: .touchUpInside)
         return thirteen
     }()
+
     
+    @objc func selectButton(_ sender: UIButton) {
+        zeroButton.isSelected = false
+        tenButton.isSelected = false
+        thirteenButton.isSelected = false
+
+        sender.isSelected = true
+        
+        if sender.isSelected {
+            sender.backgroundColor = ColorsDesign.ActionsButtons.green
+            sender.setTitleColor(.white, for: .normal)
+            serviceCharge = sender.currentTitle!
+            let serviceChargeString = String(serviceCharge.dropLast())
+            serviceWithoutPer = Int(serviceChargeString) ?? 0
+            let serviceNumber = Double(serviceChargeString) ?? 0
+            tip = 1 + (serviceNumber / 100)
+        }
+        
+        if zeroButton.isSelected != true{
+            zeroButton.setTitleColor(ColorsDesign.ActionsButtons.green, for: .normal)
+            zeroButton.backgroundColor = .clear
+        }
+        if tenButton.isSelected != true {
+            tenButton.setTitleColor(ColorsDesign.ActionsButtons.green, for: .normal)
+            tenButton.backgroundColor = .clear
+        }
+
+        if thirteenButton.isSelected != true {
+            thirteenButton.setTitleColor(ColorsDesign.ActionsButtons.green, for: .normal)
+            thirteenButton.backgroundColor = .clear
+        }
+    }
+
     var calculateButton: UIButton = {
         let calculate = ButtonConfiguration()
         calculate.calculate()
+        calculate.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return calculate
     }()
+    
+    @objc func buttonPressed(){
+        delegate?.buttonPressed(people: splitNumber.text, tip: "\(serviceWithoutPer)%")
+    }
+    
+    func calculation() -> String? {
+        let replacingUserNumber = userNumberText.text?.replacingOccurrences(of: ",", with: ".")
+        if let numberUser = Double(replacingUserNumber!), let people = Double(splitNumber.text!) {
+            let resultado = (numberUser * tip) / people
+            let resulString = String(format: "%.2f", resultado)
+            let replacingResult = resulString.replacingOccurrences(of: ".", with: ",")
+            return replacingResult
+        }
+       return nil
+    }
     
     //MARK: - Labels
     
@@ -67,158 +137,162 @@ class PaymentsView: UIView {
     
     var chooceSplit: UILabel = {
         let choose = LabelConfiguration()
-        choose.ChooseSplit()
+        choose.chooseSplit()
         return choose
     }()
     
-    var splitNUmber: UILabel = {
+    var splitNumber: UILabel = {
         let number = LabelConfiguration()
-        number.SplitNumber()
+        number.splitNumber()
         return number
     }()
     
-    
     //MARK: - TextField
-    
-    var textField: UITextField = {
+    var userNumberText: UITextField = {
         let textField = TextFieldConfiguration()
         textField.configurations()
-//        let textField = UITextField()
-//        textField.textAlignment = .center
+        textField.endEditing(true)
         return textField
     }()
     
     // MARK: - Stepper
-    
     var stepper: UIStepper = {
-        let stepper = UIStepper()
-//        stepper.contentMode = .scaleToFill
-        stepper.minimumValue = 2
-//        stepper.
+        let stepper = StepperConfiguration()
+        stepper.configuration()
+        stepper.addTarget(self, action: #selector(splitNumber(_:)), for: .touchUpInside)
         return stepper
     }()
     
+    @objc func splitNumber(_ sender: UIStepper){
+        splitNumber.text = String(format: "%.f", sender.value)
+    }
+    
     //MARK: - StacksView
-    
     var verticalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-//        stackView.spacing = 10
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.backgroundColor = .brown
-        return stackView
-    }()
-    
-    var stackViewVertical: UIStackView = {
-        let stack = UIStackView()
+        let stack = StackConfiguration()
+        stack.verticalConfiguration()
         return stack
     }()
     
     var titleStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
-        stackView.backgroundColor = .black
-        return stackView
+        let stack = StackConfiguration()
+        stack.verticalConfiguration()
+        return stack
     }()
     
     var selectStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
-        stackView.backgroundColor = .blue
-        return stackView
+        let stack = StackConfiguration()
+        stack.proportionallyConfiguration()
+        return stack
     }()
     
     var chooseStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .top
-        stackView.distribution = .fillEqually
-        stackView.spacing = 25
-        stackView.backgroundColor = .yellow
-        return stackView
+        let stack = StackConfiguration()
+        stack.equallyConfiguration()
+        return stack
     }()
-    
 }
 
+    //MARK: - Extension ViewProtocol
 extension PaymentsView: ViewProtocol {
     func buildViewHierarchy() {
-//        addSubview(backgrounView)
-//        addSubview(verticalStackView)
-//            verticalStackView.addArrangedSubview(titleStackView)
-//                titleStackView.addArrangedSubview(orientationTitle)
-//                titleStackView.addArrangedSubview(textField)
-//            verticalStackView.addArrangedSubview(selectStackView)
-//                selectStackView.addArrangedSubview(zeroButton)
-//                selectStackView.addArrangedSubview(tenButton)
-//                selectStackView.addArrangedSubview(thirteenButton)
-//
-//            verticalStackView.addArrangedSubview(chooseStackView)
-////        chooseStackView.addArrangedSubview(chooceSplit)
-//                chooseStackView.addArrangedSubview(splitNUmber)
-//                chooseStackView.addArrangedSubview(stepper)
-//
-//        addSubview(calculateButton)
+        addSubview(view)
+        
+        view.addSubview(verticalStackView)
+        verticalStackView.addArrangedSubview(orientationTitle)
+        verticalStackView.addArrangedSubview(userNumberText)
+        
+        view.addSubview(backgroundView)
+        backgroundView.addSubview(titleStackView)
+        titleStackView.addArrangedSubview(selectTip)
+        titleStackView.addArrangedSubview(selectStackView)
+            
+        selectStackView.addArrangedSubview(zeroButton)
+        selectStackView.addArrangedSubview(tenButton)
+        selectStackView.addArrangedSubview(thirteenButton)
+        
+        titleStackView.addArrangedSubview(chooceSplit)
+        titleStackView.addArrangedSubview(chooseStackView)
+        
+        chooseStackView.addArrangedSubview(splitNumber)
+        chooseStackView.addArrangedSubview(stepper)
+        
+        view.addSubview(calculateButton)
     }
     
     func setupConstrants() {
         
+        view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
+        verticalStackView.snp.makeConstraints { make in
+            make.top.equalTo(40)
+            make.trailing.leading.equalToSuperview()
+        }
         
-//        backgrounView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
-//
-//        verticalStackView.snp.makeConstraints { make in
-//            make.top.trailing.leading.equalToSuperview()
-////            make.bottom.equalTo(calculateButton.snp.top).offset(50)
-//        }
-//
-////        titleStackView.snp.makeConstraints { make in
-////            make.top.equalToSuperview().inset(32)
-////            make.trailing.leading.equalToSuperview()
-////        }
-//
-//        orientationTitle.snp.makeConstraints { make in
-//            make.top.trailing.leading.equalToSuperview().inset(32)
-//        }
-//
-//        textField.snp.makeConstraints { make in
-//            make.trailing.leading.equalToSuperview().inset(32)
-//        }
-//
-////        selectStackView.snp.makeConstraints { make in
-////            make.top.equalTo(titleStackView.snp.bottom)
-////            make.trailing.leading.equalToSuperview()
-////        }
-//
-//        chooseStackView.snp.makeConstraints { make in
-////            make.bottom.equalToSuperview()
-//            make.width.equalTo(200)
-////            make.bottom.trailing.leading.equalToSuperview().inset(32)
-//        }
-//
-//
-////        splitNUmber.snp.makeConstraints { make in
-////            make.leading.equalToSuperview().inset(24)
-////        }
-//
-//        calculateButton.snp.makeConstraints { make in
-////            make.bottom.trailing.leading.equalToSuperview().inset(24)
-//            make.bottom.equalToSuperview().inset(24)
-//            make.centerX.equalToSuperview()
-//            make.top.equalTo(verticalStackView.snp.bottom).offset(24)
-//            make.height.equalTo(75)
-//            make.width.equalTo(150)
-//        }
-//    }
+        orientationTitle.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.trailing.leading.equalToSuperview().inset(30)
+            make.height.equalTo(30)
+        }
+        
+        userNumberText.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.trailing.leading.equalToSuperview()
+        }
+        
+        backgroundView.snp.makeConstraints { make in
+            make.top.equalTo(verticalStackView.snp.bottom).offset(40)
+            make.bottom.trailing.leading.equalToSuperview()
+        }
+        
+        titleStackView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+        }
+        
+        selectTip.snp.makeConstraints { make in
+            make.trailing.leading.equalToSuperview().inset(30)
+        }
+        
+        selectStackView.snp.makeConstraints { make in
+            make.trailing.leading.equalToSuperview().inset(30)
+        }
+        
+        chooceSplit.snp.makeConstraints { make in
+            make.trailing.leading.equalToSuperview().inset(30)
+
+        }
+        
+        calculateButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(32)
+            make.height.equalTo(50)
+            make.width.equalTo(200)
+        }
+    }
+}
+
+    //MARK: - Extension UITextFieldDelegate
+extension PaymentsView: UITextFieldDelegate {
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        userNumberText.resignFirstResponder()
+        return true
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text != ""{
+            return true
+        } else {
+            textField.placeholder = "Type Something"
+            return false
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        userNumberText.resignFirstResponder()
+    }
 }
 
 

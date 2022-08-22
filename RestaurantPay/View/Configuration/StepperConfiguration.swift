@@ -18,6 +18,7 @@ class StepperConfiguration: UIStepper {
     }
     
     func configuration(){
-        backgroundColor = .red
+        minimumValue = 1.0
+        maximumValue = 10.0
     }
 }

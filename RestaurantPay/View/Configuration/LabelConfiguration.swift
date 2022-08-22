@@ -21,37 +21,45 @@ class LabelConfiguration: UILabel {
         textAlignment = .left
         font = UIFont.systemFont(ofSize: 25)
         textColor = .lightGray
+        
     }
     
     func selectTip() {
         text = Constants.Labels.selectTip
+        font = UIFont.systemFont(ofSize: 25)
+        textColor = .lightGray
     }
     
-    func ChooseSplit() {
+    func chooseSplit() {
         text = Constants.Labels.chooseSplit
         font = UIFont.systemFont(ofSize: 25)
         textColor = .lightGray
     }
     
-    func SplitNumber() {
+    func splitNumber() {
         textAlignment = .center
-        text = "2"
+        text = "1"
         textColor = ColorsDesign.Letters.green
-//        backgroundColor = .yellow
         font = UIFont.systemFont(ofSize: 25)
     }
     
     func totalPerPerson() {
         text = Constants.Labels.totalPerPerson
+        font = UIFont.systemFont(ofSize: 25)
+        textColor = .lightGray
     }
     
     func resultValue() {
-        
+        textAlignment = .center
+        text = ""
+        textColor = ColorsDesign.Letters.green
+        font = UIFont.boldSystemFont(ofSize: 45)
     }
     
     func settingsChosen() {
-        text = Constants.Labels.settingsChosen
+        textAlignment = .center
+        font = UIFont.systemFont(ofSize: 25)
+        textColor = .lightGray
+        numberOfLines = 0
     }
-    
-
 }

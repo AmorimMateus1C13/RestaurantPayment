@@ -23,6 +23,6 @@ struct Constants {
 //        static let splitNumber = ""
         static let totalPerPerson = "Total per person"
 //        static let resultValue = ""
-        static let settingsChosen = "Split between 2 people, with 10% tip."
+        static var settingsChosen = "Split between 2 people, with 10% tip."
     }
 }

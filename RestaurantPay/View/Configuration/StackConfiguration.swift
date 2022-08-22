@@ -18,11 +18,22 @@ class StackConfiguration: UIStackView {
     
     func verticalConfiguration(){
         axis = .vertical
-        spacing = 10
+        alignment = .center
+        distribution = .fill
+        spacing = 20
     }
     
-    func horizontalConfiguration(){
-        axis =  .horizontal
-        spacing = 15
+    func proportionallyConfiguration(){
+        axis = .horizontal
+        alignment = .fill
+        distribution = .fillProportionally
+        spacing =  10
+    }
+    
+    func equallyConfiguration(){
+        axis = .horizontal
+        alignment = .fill
+        distribution = .fillEqually
+        spacing = 25
     }
 }
