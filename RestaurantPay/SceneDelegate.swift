@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowsScene.coordinateSpace.bounds)
         window?.windowScene = windowsScene
         window?.rootViewController = navigationController
-        navigationController.pushViewController(ViewController(), animated: true)
+        navigationController.pushViewController(PaymentController(), animated: true)
         window?.makeKeyAndVisible()
     }
 

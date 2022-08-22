@@ -44,13 +44,7 @@ class ButtonConfiguration: UIButton {
     func recalculate() {
         setTitle(Constants.Buttons.recalculate, for: .normal)
         backgroundColor = ColorsDesign.ActionsButtons.green
-//        window?.rootViewController?.dismiss(animated: false)
     }
-    
-    
-//    func refresh(teste: UIView){
-//        teste.window!.rootViewController?.dismiss(animated: false, completion: nil)
-//    }
     
     func selectGreen(_ button: UIButton) {
         if button.isSelected {

@@ -21,12 +21,5 @@ class TextFieldConfiguration: UITextField {
         backgroundColor = .white
         textAlignment = .center
         keyboardType = .decimalPad
-       
-        
     }
-    
-    
-    
-    
-    
 }

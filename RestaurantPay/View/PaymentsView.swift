@@ -8,8 +8,8 @@ import UIKit
 import SnapKit
 
 protocol Button {
-    func buttonPressed(people: String?, tip: String?)
-    
+    func buttonPressed(people: String?)
+    func selectTipPressed(_ sender: UIButton)
 }
 
 
@@ -41,63 +41,27 @@ class PaymentsView: UIView {
     }()
     
     // MARK: - Butttons
-    var tip = 1.1
-    var serviceCharge = ""
-    var serviceWithoutPer = 10
     
     var zeroButton: UIButton = {
         let zero = ButtonConfiguration()
         zero.zeroPer()
-        zero.addTarget(self, action: #selector(selectButton(_:)), for: .touchUpInside)
+        zero.addTarget(self, action: #selector(selectPressed(_:)), for: .touchUpInside)
         return zero
     }()
     
     var tenButton: UIButton = {
        let ten = ButtonConfiguration()
         ten.tenPer()
-        ten.addTarget(self, action: #selector(selectButton(_:)), for: .touchUpInside)
+        ten.addTarget(self, action: #selector(selectPressed(_:)), for: .touchUpInside)
         return ten
     }()
     
     var thirteenButton: UIButton = {
         let thirteen = ButtonConfiguration()
         thirteen.thirteenPer()
-        thirteen.addTarget(self, action: #selector(selectButton(_:)), for: .touchUpInside)
+        thirteen.addTarget(self, action: #selector(selectPressed(_:)), for: .touchUpInside)
         return thirteen
     }()
-
-    
-    @objc func selectButton(_ sender: UIButton) {
-        zeroButton.isSelected = false
-        tenButton.isSelected = false
-        thirteenButton.isSelected = false
-
-        sender.isSelected = true
-        
-        if sender.isSelected {
-            sender.backgroundColor = ColorsDesign.ActionsButtons.green
-            sender.setTitleColor(.white, for: .normal)
-            serviceCharge = sender.currentTitle!
-            let serviceChargeString = String(serviceCharge.dropLast())
-            serviceWithoutPer = Int(serviceChargeString) ?? 0
-            let serviceNumber = Double(serviceChargeString) ?? 0
-            tip = 1 + (serviceNumber / 100)
-        }
-        
-        if zeroButton.isSelected != true{
-            zeroButton.setTitleColor(ColorsDesign.ActionsButtons.green, for: .normal)
-            zeroButton.backgroundColor = .clear
-        }
-        if tenButton.isSelected != true {
-            tenButton.setTitleColor(ColorsDesign.ActionsButtons.green, for: .normal)
-            tenButton.backgroundColor = .clear
-        }
-
-        if thirteenButton.isSelected != true {
-            thirteenButton.setTitleColor(ColorsDesign.ActionsButtons.green, for: .normal)
-            thirteenButton.backgroundColor = .clear
-        }
-    }
 
     var calculateButton: UIButton = {
         let calculate = ButtonConfiguration()
@@ -106,19 +70,12 @@ class PaymentsView: UIView {
         return calculate
     }()
     
-    @objc func buttonPressed(){
-        delegate?.buttonPressed(people: splitNumber.text, tip: "\(serviceWithoutPer)%")
+    @objc func selectPressed(_ sender: UIButton) {
+        delegate?.selectTipPressed(sender)
     }
     
-    func calculation() -> String? {
-        let replacingUserNumber = userNumberText.text?.replacingOccurrences(of: ",", with: ".")
-        if let numberUser = Double(replacingUserNumber!), let people = Double(splitNumber.text!) {
-            let resultado = (numberUser * tip) / people
-            let resulString = String(format: "%.2f", resultado)
-            let replacingResult = resulString.replacingOccurrences(of: ".", with: ",")
-            return replacingResult
-        }
-       return nil
+    @objc func buttonPressed(){
+        delegate?.buttonPressed(people: splitNumber.text)
     }
     
     //MARK: - Labels
@@ -292,6 +249,15 @@ extension PaymentsView: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         userNumberText.resignFirstResponder()
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let text = (textField.text ?? "") as NSString
+        let newText = text.replacingCharacters(in: range, with: string)
+        if let regex = try? NSRegularExpression(pattern: "^[0-9]*((\\.|,)[0-9]{0,2})?$", options: .caseInsensitive) {
+            return regex.numberOfMatches(in: newText, options: .reportProgress, range: NSRange(location: 0, length: (newText as NSString).length)) > 0
+        }
+        return false
     }
 }
 
